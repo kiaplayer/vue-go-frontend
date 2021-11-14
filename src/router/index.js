@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import Posts from '../views/Posts.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Posts',
+    component: Posts
   },
   {
     path: '/about',
@@ -17,6 +17,7 @@ const routes = [
   }
 ]
 
+// noinspection JSCheckFunctionSignatures
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
