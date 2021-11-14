@@ -10,12 +10,14 @@
       </router-link>
     </div>
     <div class="right-links ">
-      <a class="app-bar-item" href="#">LOGIN</a>
+      <a class="app-bar-item" href="#" v-if="!loggedIn" @click.prevent="login">LOGIN</a>
+      <a class="app-bar-item" href="#" v-if="loggedIn" @click.prevent="logout">LOGOUT</a>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 // noinspection JSUnusedGlobalSymbols
 export default {
   data() {
@@ -27,11 +29,28 @@ export default {
         },
         {
           name: 'User',
-          to: { name: 'User' },
+          to: {
+            name: 'User',
+            params: {
+              userid: this.$store.getters['auth/currentUser'].username
+            }
+          },
         },
       ],
     };
-  }};
+  },
+  methods: {
+    ...mapActions({
+      login: 'auth/login',
+      logout: 'auth/logout',
+    }),
+  },
+  computed: {
+    ...mapGetters({
+      loggedIn: 'auth/isLoggedIn',
+    }),
+  }
+};
 </script>
 
 <style scoped>

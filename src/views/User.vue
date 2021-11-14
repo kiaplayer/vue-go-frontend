@@ -13,12 +13,18 @@ export default {
   components: {
     PostList,
   },
+  props: {
+    userid: {
+      type: String,
+      default: '',
+    },
+  },
   computed: {
     userPosts() {
-      return this.$store.getters["posts/userPosts"](this.user.username);
+      return this.$store.getters['posts/userPosts'](this.user.username);
     },
     user() {
-      return this.$store.getters["users/currentUser"];
+      return this.$store.getters['users/getUser'](this.userid);
     }
   }
 };

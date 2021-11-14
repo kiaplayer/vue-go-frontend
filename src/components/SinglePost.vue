@@ -1,13 +1,21 @@
 <template>
   <base-card :expandable="post.comments && post.comments.length > 0">
     <template v-slot:header>
-      <h3>{{ postTitle(post) }}</h3>
+      <h3>
+        <router-link :to="linkUser(post.user)">
+          {{ postTitle(post)}}
+        </router-link>
+      </h3>
     </template>
     {{ post.post }}
     <template v-slot:footer>
       <base-card v-for="comment in post.comments" :key="comment.id" :expandable="false">
         <template v-slot:header>
-          <h3>{{ postTitle(comment) }}</h3>
+          <h3>
+            <router-link :to="linkUser(comment.user)">
+              {{ postTitle(comment)}}
+            </router-link>
+          </h3>
         </template>
         {{ comment.post }}
       </base-card>
@@ -28,5 +36,13 @@ export default {
     postTitle(post) {
       return post.user + '@' + post.date;
     },
+    linkUser(username) {
+      return {
+        name: 'User',
+        params: {
+          userid: username,
+        },
+      };
+    }
   }};
 </script>

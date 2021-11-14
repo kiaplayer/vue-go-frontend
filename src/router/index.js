@@ -8,7 +8,7 @@ const routes = [
     component: Posts,
   },
   {
-    path: '/user',
+    path: '/user/:userid',
     name: 'User',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
