@@ -26,8 +26,8 @@ export default {
           to: { name: 'Posts' },
         },
         {
-          name: 'About',
-          to: { name: 'About' },
+          name: 'User',
+          to: { name: 'User' },
         },
       ],
     };

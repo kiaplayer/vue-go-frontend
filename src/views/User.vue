@@ -1,21 +1,24 @@
 <template>
-  <div class="posts">
-    <h1>Posts</h1>
-    <post-list :posts="posts"></post-list>
+  <div class="container">
+    <h1>{{ user.username }}</h1>
+    <p>{{ user.description }}</p>
+    <post-list :posts="posts" title="Last Posts">
+    </post-list>
   </div>
 </template>
 
 <script>
 import PostList from '../components/PostList.vue';
-// noinspection JSUnusedGlobalSymbols
-export default
-{
-  name: 'Posts',
+export default {
   components: {
-    PostList
+    PostList,
   },
-  data: function() {
+  data() {
     return {
+      user: {
+        username: 'idalmasso',
+        description: 'This is only a little description',
+      },
       posts: [
         {
           id: 1,
