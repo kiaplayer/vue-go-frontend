@@ -20,18 +20,33 @@
         {{ comment.post }}
       </base-card>
     </template>
+    <template v-if="loggedIn" v-slot:actions>
+      <add-text-form
+          textRequest="Add comment"
+          :showLabel="false"
+          @text-added="text => addComment(text, post)">
+      </add-text-form>
+    </template>
   </base-card>
 </template>
 
 <script>
+import AddTextForm from '../components/AddTextForm.vue';
 import BaseCard from './UI/BaseCard.vue';
+import {mapGetters} from 'vuex';
 export default {
   components: {
+    AddTextForm,
     BaseCard,
   },
   props: [
     'post'
   ],
+  computed: {
+    ...mapGetters({
+      loggedIn: 'auth/isLoggedIn',
+    }),
+  },
   methods: {
     postTitle(post) {
       return post.user + '@' + post.date;
@@ -43,6 +58,15 @@ export default {
           userid: username,
         },
       };
-    }
+    },
+    addComment(text, post) {
+      this.$store.dispatch('posts/addComment', {
+        postId: post.id,
+        comment: {
+          user: this.$store.getters['auth/currentUser'].username,
+          post: text,
+        },
+      });
+    },
   }};
 </script>
