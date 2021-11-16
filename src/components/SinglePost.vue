@@ -2,17 +2,18 @@
   <base-card :expandable="post.comments && post.comments.length > 0">
     <template v-slot:header>
       <h3>
-        <router-link :to="linkUser(post.user)">
+        <router-link :to="linkUser(post.username)">
           {{ postTitle(post)}}
         </router-link>
       </h3>
+      <button class="delete-button" @click.prevent="deletePost">Delete</button>
     </template>
     {{ post.post }}
     <template v-slot:footer>
       <base-card v-for="comment in post.comments" :key="comment.id" :expandable="false">
         <template v-slot:header>
           <h3>
-            <router-link :to="linkUser(comment.user)">
+            <router-link :to="linkUser(comment.username)">
               {{ postTitle(comment)}}
             </router-link>
           </h3>
@@ -49,7 +50,7 @@ export default {
   },
   methods: {
     postTitle(post) {
-      return post.user + '@' + post.date;
+      return post.username + '@' + post.date;
     },
     linkUser(username) {
       return {
@@ -63,10 +64,13 @@ export default {
       this.$store.dispatch('posts/addComment', {
         postId: post.id,
         comment: {
-          user: this.$store.getters['auth/currentUser'].username,
+          username: this.$store.getters['auth/currentUser'].username,
           post: text,
         },
       });
+    },
+    deletePost() {
+      this.$store.dispatch('posts/deletePost', { post: this.post });
     },
   }};
 </script>
